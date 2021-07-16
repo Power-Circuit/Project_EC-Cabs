@@ -166,7 +166,7 @@
 			
             <button class="bg-indigo-300 hover:bg-indigo-500 text-white font-bold py-2 px-6 mr-2 rounded">
 			<?php
-           echo " <a href=\"../booking/booking.php?id=" .  $_COOKIE['clientID'] . "\"> New Booking</a>";
+           echo " <a href=\"../booking/booking.php?id=" .  $_COOKIE['clientsID'] . "\"> New Booking</a>";
 			  ?>
             </button>
 			
@@ -183,11 +183,11 @@
     <table class="table-auto text-left w-full">
       <thead class="bg-gray-200">
         <tr>
-          <th class="w-1/6 px-4 py-2">initial Collection Point</th>
-          <th class="w-1/12 px-4 py-2">Start Date</th>
-          <th class="w-1/12 px-4 py-2">End Date</th>
+          <th class="w-1/6 px-4 py-2">Pick-up address</th>
+          <th class="w-1/12 px-4 py-2">Destination</th>
+          <th class="w-1/12 px-4 py-2">Pick-up Date</th>
           <th class="w-1/12 px-4 py-2">Number of passengers</th>
-          <th class="w-1/12 px-4 py-2">Trailer</th>
+          <th class="w-1/12 px-4 py-2">Number of Large bags</th>
           <th class="w-1/12 px-4 py-2">Status</th>
           <th class="w-1/12 px-4 py-2">Options</th>
         </tr>
@@ -198,23 +198,23 @@
 	 require_once("../config/config.php");
 	 
 	$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
-		$clientCookie = $_COOKIE['clientID'];
+		$clientCookie = $_COOKIE['clientsID'];
 		
-		$query = "SELECT * FROM booking WHERE clientID = " . $clientCookie;
+		$query = "SELECT * FROM booking WHERE clientsID = " . $clientCookie;
 		//$query = "SELECT * FROM booking ";
 		$email = $_COOKIE["email"];
-		$clientID = $_COOKIE["clientID"];
+		$clientsID = $_COOKIE["clientsID"];
 
 		$result = mysqli_query($conn, $query) or die("Could not execute query");
 		$i = 0;
 
 		while($row = $result->fetch_assoc()){
 				 if($i % 2 != 0){
-						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["initialCollectionPoint"] . "</td>";
-						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["startDate"] . "</td>";
-						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["endDate"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["collectionPoint"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["destinationPoint"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["startdate"] . "</td>";
 						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["numberOfPassengers"] . "</td>";
-						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["trailer"] . "</td>";
+						echo " <td class=\"border px-4 py-4 bg-gray-300\"> " . $row["largebags"] . "</td>";
 						if($row["statusID"] == 1){
 							echo " <td class=\"border px-4 py-4 bg-gray-300\">Booking Created</td>";
 						}
@@ -242,11 +242,11 @@
 				
 				}
 			else{
-				echo " <td class=\"border px-4 py-4\"> " . $row["initialCollectionPoint"] . "</td>";
-				echo " <td class=\"border px-4 py-4\"> " . $row["startDate"] . "</td>";
-				echo " <td class=\"border px-4 py-4\"> " . $row["endDate"] . "</td>";
+				echo " <td class=\"border px-4 py-4\"> " . $row["collectionPoint"] . "</td>";
+				echo " <td class=\"border px-4 py-4\"> " . $row["destinationPoint"] . "</td>";
+				echo " <td class=\"border px-4 py-4\"> " . $row["startdate"] . "</td>";
 				echo " <td class=\"border px-4 py-4\"> " . $row["numberOfPassengers"] . "</td>";
-				echo " <td class=\"border px-4 py-4\"> " . $row["trailer"] . "</td>";
+				echo " <td class=\"border px-4 py-4\"> " . $row["largebags"] . "</td>";
 					if($row["statusID"] == 1){
 							echo " <td class=\"border px-4 py-4 \"> Booking Created</td>";
 						}
@@ -274,7 +274,7 @@
 			if( $row["statusID"] == 1 ){
 						echo " <td class=\"border py-2\">
 						<span class=\"inline-flex w-full justify-between px-3\">
-						  <a class=\"tooltipe\"  href=\"../daytripdashboard/daytripdashboard.php?id=" . $row['bookingID'] . "&cp=" . $row["initialCollectionPoint"] . "&sd=" . $row["startDate"] .
+						  <a class=\"tooltipe\"  href=\"../daytripdashboard/daytripdashboard.php?id=" . $row['bookingID'] . "&cp=" . $row["collectionPoint"] . "&sd=" . $row["startdate"] .
 						  "\">
 							<svg alt=\"Edit\" class=\"text-blue-300 hover:text-blue-700 h-6 w-6 m-2\" fill=\"none\" viewBox=\"0 0 24 24\" stroke=\"currentColor\">
 							  <path stroke-linecap=\"round\" stroke-linejoin=\"round\" stroke-width=\"2\" d=\"M12 6v6m0 0v6m0-6h6m-6 0H6\" />

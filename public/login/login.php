@@ -16,7 +16,7 @@
 
   require_once("../config/config.php");
 
- if(!isset($_COOKIE["clientID"])) {
+ if(!isset($_COOKIE["clientsID"])) {
 	  if(isset($_REQUEST['submit'])) {
 		   $conn = mysqli_connect("ecabs.mysql.database.azure.com", "admincab@ecabs", "password123!", "ECabs") or die("There was a problem connecting to the server!");
 		  
@@ -35,7 +35,7 @@
 						if($row['password'] == $password){
 							echo " <script type='text/javascript'>alert('Logged in succesfully');</script>";
 							setcookie("email", $email,time() + 3600, '/');
-							setcookie("clientID", $row["clientID"],time() + 3600, '/');
+							setcookie("clientsID", $row["clientsID"],time() + 3600, '/');
 								header("Location: ../clientdashboard/clientdashboard.php");
 						}
 						else{

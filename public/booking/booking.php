@@ -3,62 +3,52 @@
 <?php
 
 	if(isset($_REQUEST['submit'])){
-		$initialCollectionPoint =  $_REQUEST['initialCollectionPoint'];
-		//$destination =  $_REQUEST['destination'];
-		$startDate =  $_REQUEST['startDate'];
-		$endDate =  $_REQUEST['endDate'];
-		//echo " <script type='text/javascript'>alert('Your Start date is after your end date!');</script>";
+			$initialCollectionPoint =  $_REQUEST['initialCollectionPoint'];
+			//$destination =  $_REQUEST['destination'];
+			$startDate =  $_REQUEST['startDate'];
+			$lBags =  $_REQUEST['numBagsL'];
+			$sBags =  $_REQUEST['numBagsS'];
 		
 		
-		if( strtotime($startDate) < strtotime($endDate) ) {
-				
+		
+			$flyTime =  $_REQUEST['flytime'];
+			$numPassengers =  $_REQUEST['numPassengers'];
+				$fly =  $_REQUEST['flyCheck'];
+			$landing =  $_REQUEST['flyType'];
+			$des =  $_REQUEST['destinationPoint'];
 					
-					$trailer =  $_REQUEST['trailer'];
-					$numPassengers =  $_REQUEST['numPassengers'];
-					$lat =  $_REQUEST['lat'];
-					$lng =  $_REQUEST['lng'];
-					$loc =  "yes";
-					$clientID =  $_COOKIE['clientID'];
-					$date1 = strtotime($startDate);
-					$date2 = strtotime($endDate);
+			$clientsID =  $_COOKIE['clientsID'];
+				
+					$flightStat = strval($startDate) . "" . strval($clientsID);
+			$status = 1;
+			require_once("../config/config.php");
+			$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
+			
+			
+			$query = "INSERT INTO booking (collectionPoint,destinationPoint, startdate, numberOfPassengers,largebags, smallbags,statusID, clientsID)
+			VALUES ('$initialCollectionPoint','$des', '$startDate', '$numPassengers','$lBags','$sBags','$status','$clientsID')";
 
-					if($date1 > $date2){
-						echo " <script type='text/javascript'>alert('Your Start date is after your end date!');</script>";
-							header("Location: booking.php");
-					}
-					else{
-					// Date 2 is >
+
+			$result = mysqli_query($conn, $query) or die("Could not execute") ;
 		
-					$status = 1;
-					require_once("../config/config.php");
-					$conn = mysqli_connect($servername, $username, $password, $database) or die("Could not connect to database!");
-		
-						$query = "INSERT INTO booking (initialCollectionPoint, startDate, endDate, numberOfPassengers, clientID,trailer,statusID,hasLocation,latitude,longitude)
-						VALUES ('$initialCollectionPoint', '$startDate','$endDate', '$numPassengers','$clientID','$trailer','$status','$loc','$lat','$lng')";
+			if($result === false) {
 
-
-						$result = mysqli_query($conn, $query) or die("Could not execute") ;
-		
-						if($result === false) {
-
-							echo "Could not execute query: " . $result . " quer: " . $query ;
-												//header("Location: booking.php");
+			echo "Could not execute query: " . $result . " quer: " . $query ;
+							//header("Location: booking.php");
 
 			
-						}
-						else{
-							setcookie("message", "Successfully added booking",time() + 3600, '/');
-							header("Location: ../clientdashboard/clientdashboard.php");
-							}
+			}
+			else{
+			setcookie("message", "Successfully added booking",time() + 3600, '/');
+			header("Location: ../clientdashboard/clientdashboard.php");
+			}
 
 							
-						mysqli_close($conn);
-						}
+			mysqli_close($conn);
+						
 
-		}
-		else{
-			echo "Your start date is after your end date!";
-		}
+		
+		
 		}
 		
 	?>
@@ -166,7 +156,7 @@
   <div class="flex flex-wrap -mx-3 mb-6">
     <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;" for="grid-first-name">
-       Initial collection Date
+       Pick up Date
       </label>
    
          <input type="date" id="startDate" name="startDate"
@@ -175,29 +165,58 @@
     </div>
     <div class="w-full md:w-1/2 px-3">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-last-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
-       End Date
+      Destination point
       </label>
-                        <input type="date" id="endDate" name="endDate"
-                              
-                               min="2020-01-01" max="2021-12-31" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+                         <textarea style="border: 2px solid black;
+  border-radius: 4px;padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name"  name="destinationPoint" id="destinationPoint" max=500></textarea>
+
 	</div>
   </div>
   <div class="flex flex-wrap -mx-3 mb-6">
       <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
       <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
-        Initial collection Point
+        Pick up Point
       </label>
            <textarea style="border: 2px solid black;
   border-radius: 4px;padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name"  name="initialCollectionPoint" id="initialCollectionPoint" max=500></textarea>
 
     </div>
 	  <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
-	   <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
-        Get My Location
+	  <label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-password" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+       Are you taking a flight?
       </label>
-	   <div  style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;height: 100%;" id="googleMap" ></div>
-	            	   <input style="opacity: 0;" type="text"  name="lat" id="lat">
-	            	   <input style="opacity: 0;"  type="text"  name="lng" id="lng">
+	   Yes <input type="radio" onclick="yesnoCheck();" value ="fly" name="flyCheck" id="yesCheck"/> No
+<input type="radio" onclick="yesnoCheck();" value ="nofly" name="flyCheck" id="noCheck" checked />
+
+
+			<div id="fly" style="display: none;">
+				 Taking off <input type="radio" onclick="ifFlying();" name="flyType" value ="takeoff" id="yesFly" checked/> Landing
+<input type="radio" onclick="ifFlying();" name="flyType" value ="landing" id="yesLand"/>
+				<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 " for="grid-first-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+					Flight take-off / landing time
+				</label>
+				<input type="time" id="flytime" name="flytime"
+                               
+					min="2020-01-01" max="2021-12-31" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+
+				<label class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2 " for="grid-first-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+					Flight number
+				</label><input type="text" id="flytime" name="flytime"
+                               
+				min="2020-01-01" max="2021-12-31" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+			</div>
+			<script>
+				
+
+				function yesnoCheck() {
+				var x = document.getElementById("fly");
+    if (document.getElementById('yesCheck').checked) {
+       x.style.display = "block";
+    } else {
+       x.style.display = "none";
+    }
+	}
+			</script>
 
   </div>
   </div>
@@ -213,14 +232,21 @@
     </div>
     <div class="w-full md:w-1/2 px-3">
       <label class="block uppercase  text-gray-700 text-xs font-bold mb-2" for="grid-last-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
-       Would you like a trailer?
+    
       </label>
-	  <h3>Trailer</h3>
-                       <select name="trailer" id="trailer" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;" class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                            <option value="yes">Yes</option>
-                            <option value="no">No</option>
+	  <h3>  Number of Large bags</h3>
+                        <input style="border: 2px solid black;
+  border-radius: 4px;padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name" type="number" value=0 name="numBagsL" id="numBagsL" max=500>
 
-                        </select>
+	</div>
+	<div class="w-full md:w-1/2 px-3">
+      <label class="block uppercase  text-gray-700 text-xs font-bold mb-2" for="grid-last-name" style="padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;">
+    
+      </label>
+	  <h3>  Number of small bags</h3>
+                        <input style="border: 2px solid black;
+  border-radius: 4px;padding-top: 0.75rem;padding-bottom: 0.75rem;right: 5px;padding-left: 0.75rem;"  class="block uppercase tracking-wide text-gray-700 text-xs font-bold mb-2" for="grid-first-name" type="number" value=0 name="numBagsS" id="numBagsS" max=500>
+
 	</div>
 	
 	 <div class="w-full content-around py-3" style="padding-top: 0.75rem;padding-bottom: 0.75rem;padding-left: 0.75rem;">
@@ -234,49 +260,6 @@
  
 
   </div>
- 
 
-    <script>
-
-
-        function myMap() {
-		  var x = document.getElementById("googleMap");
-  
-    
-                if(navigator.geolocation){
-                        navigator.geolocation.getCurrentPosition(showPosition);
-                }
-                else{
-                    alert("Geolocation is not supported on this device");
-                }
-
-        }
-
-        function showPosition(position){
-		
-        var lat = position.coords.latitude;
-        var lng = position.coords.longitude;
-		document.getElementById("lat").value =lat ;
-	
-		 document.getElementById("lng").value =lng ;
-		// document.getElementById("startDate").value = Date();
-
-            var mapProp= {
-            center:new google.maps.LatLng(lat,lng),
-            zoom:10,
-            };
-            var map = new google.maps.Map(document.getElementById("googleMap"),mapProp);
-            
-
-        }
-
-		
-
-
-    </script>
-
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBIVgzlPlKXdhQkUuiP6mKS9P6kqbJDxHE&callback=myMap"></script>
-
- <!-- <iframe id="map" src="map.html" title="location"></iframe>-->
 </body>
   </html>
