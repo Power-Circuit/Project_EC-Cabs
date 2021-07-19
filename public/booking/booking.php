@@ -8,9 +8,6 @@
 			$startDate =  $_REQUEST['startDate'];
 			$lBags =  $_REQUEST['numBagsL'];
 			$sBags =  $_REQUEST['numBagsS'];
-		
-		
-		
 			$flyTime =  $_REQUEST['flytime'];
 			$numPassengers =  $_REQUEST['numPassengers'];
 				$fly =  $_REQUEST['flyCheck'];

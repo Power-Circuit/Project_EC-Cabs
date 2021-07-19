@@ -2,11 +2,11 @@
 <!doctype html>
 <html lang="en">
 <?php   
-		if(isset($_COOKIE['message'])){
+		/*if(isset($_COOKIE['message'])){
 		
 			echo $_COOKIE['message'];
 			setcookie("message", "",time() + 3600, '/');
-		}
+		}*/
 	?>
 <head>
   <meta charset="utf-8">

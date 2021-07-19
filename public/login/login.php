@@ -23,8 +23,7 @@
 			$email = $_POST['email'];
 			$password = $_POST['password'];
 
-			$query = 
-			  "SELECT clientsID,email,password FROM clients WHERE email =\"" . $email ."\"";
+			$query =  "SELECT clientsID,email,password FROM clients WHERE email =\"" . $email ."\"";
 
 			  $result = mysqli_query($conn, $query) or die("Could not execute query");
 
