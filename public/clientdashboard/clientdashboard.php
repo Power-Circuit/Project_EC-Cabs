@@ -25,7 +25,6 @@
   display: inline-block;
   border-bottom: 1px dotted black; /* If you want dots under the hoverable text */
 }
-
 /* Tooltip text */
 .tooltipc .tooltiptextc {
   visibility: hidden;

@@ -6,6 +6,5 @@
 		   $username = "admincab@ecabs";
 		   $password = "password123!";
 		   $database = "ECabs";
- 
 
 	?>

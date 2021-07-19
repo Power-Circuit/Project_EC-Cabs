@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <?php
-
 	if(isset($_REQUEST['submit'])){
 			$initialCollectionPoint =  $_REQUEST['initialCollectionPoint'];
 			//$destination =  $_REQUEST['destination'];
