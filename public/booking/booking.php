@@ -24,7 +24,6 @@
 			$query = "INSERT INTO booking (collectionPoint,destinationPoint, startdate, numberOfPassengers,largebags, smallbags,statusID, clientsID)
 			VALUES ('$initialCollectionPoint','$des', '$startDate', '$numPassengers','$lBags','$sBags','$status','$clientsID')";
 
-
 			$result = mysqli_query($conn, $query) or die("Could not execute") ;
 		
 			if($result === false) {

@@ -17,6 +17,7 @@
 
  if(!isset($_COOKIE["clientsID"])) {
 	  if(isset($_REQUEST['submit'])) {
+
 		   $conn = mysqli_connect("ecabs.mysql.database.azure.com", "admincab@ecabs", "password123!", "ECabs") or die("There was a problem connecting to the server!");
 		  
 			$email = $_POST['email'];

@@ -237,8 +237,6 @@
 							echo " <td class=\"border px-4 py-4 bg-gray-300\"> Issued</td>";
 						}
 				
-				
-				
 				}
 			else{
 				echo " <td class=\"border px-4 py-4\"> " . $row["collectionPoint"] . "</td>";
